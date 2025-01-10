@@ -320,22 +320,4 @@ std::vector<const char *> GameCore::GetSelectableUnitList() const {
   }
   return result;
 }
-
-Unit* GameCore::GetNearestEnemyUnit(glm::vec2 position) const {
-  Unit* nearest_enemy = nullptr;
-  float min_distance = std::numeric_limits<float>::max();
-
-  for (const auto& unit_pair : units_) {
-    const auto& unit = unit_pair.second;
-    if (unit->GetPlayerId() != render_perspective_) {
-      float distance = glm::distance(position, unit->GetPosition());
-      if (distance < min_distance) {
-        min_distance = distance;
-        nearest_enemy = unit.get();
-      }
-    }
-  }
-
-  return nearest_enemy;
-}
 }  // namespace battle_game

@@ -114,7 +114,6 @@ void larry_tank::Update() {
   Move(3.0f, glm::radians(180.0f));
   RotateTurret();
   Fire();
-  FireMissile();
   ActivateShield();
 }
 
@@ -174,25 +173,6 @@ void larry_tank::Fire() {
             position_ + Rotate({0.0f, 1.2f}, turret_rotation_),
             turret_rotation_, GetDamageScale(), velocity);
         fire_count_down_ = kTickPerSecond;  // Fire interval 1 second.
-      }
-    }
-  }
-  if (fire_count_down_) {
-    fire_count_down_--;
-  }
-}
-
-void larry_tank::FireMissile() {
-  if (fire_count_down_ == 0) {
-    auto player = game_core_->GetPlayer(player_id_);
-    if (player) {
-      auto &input_data = player->GetInputData();
-      if (input_data.mouse_button_down[GLFW_MOUSE_BUTTON_RIGHT]) {
-        auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
-        GenerateBullet<bullet::HomingMissile>(
-            position_ + Rotate({0.0f, 1.2f}, turret_rotation_),
-            turret_rotation_, GetDamageScale(), velocity);
-        fire_count_down_ = kTickPerSecond * 2;  // Fire interval 2 seconds.
       }
     }
   }
