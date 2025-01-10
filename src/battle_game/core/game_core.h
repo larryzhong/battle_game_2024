@@ -36,6 +36,8 @@ class GameCore {
   void Update();
   void Render();
 
+  Unit* GetNearestEnemyUnit(glm::vec2 position) const;
+
   template <class UnitType, class... Args>
   uint32_t AddUnit(uint32_t player_id, Args... args) {
     auto unit_index = unit_index_++;
